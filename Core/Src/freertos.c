@@ -189,7 +189,8 @@ uint32_t err_spi;
 
 
 //初始位置
-float init_p=4;
+float init_p_1=4;
+float init_p_2=4;
 //回零点的时间，ms
 #define TO_ZERO_TIME 10000
 
@@ -234,6 +235,12 @@ void Motor_Contron_Task_Task(void const * argument)
 	CAN_1.ID_1_Motor_send.kp=60;
 	CAN_1.ID_1_Motor_send.kd=2;
 
+	CAN_2.ID_1_Motor_send.position=0;
+	CAN_2.ID_1_Motor_send.speed=0;
+	CAN_2.ID_1_Motor_send.torque=0;
+	CAN_2.ID_1_Motor_send.kp=60;
+	CAN_2.ID_1_Motor_send.kd=2;
+
 
 	CAN_1.ID_4_Motor_send.position=0;
 	CAN_1.ID_4_Motor_send.speed=1;
@@ -242,7 +249,11 @@ void Motor_Contron_Task_Task(void const * argument)
 	CAN_1.ID_4_Motor_send.kd=0.5;
 
    //获取初始位置
-	init_p=CAN_1.ID_1_Motor_recieve.current_position_f;
+	init_p_1=CAN_1.ID_1_Motor_recieve.current_position_f;
+	init_p_2=CAN_2.ID_1_Motor_recieve.current_position_f;
+
+	printf("init_p_1= %f rad",init_p_1);
+	printf("init_p_2= %f rad",init_p_2);
   /* Infinite loop */
   for(;;)
   {
@@ -254,7 +265,8 @@ void Motor_Contron_Task_Task(void const * argument)
 		if(to_zero_speed>0)
 		{
 			to_zero_speed--;
-	       CAN_1.ID_1_Motor_send.position=init_p*(to_zero_speed/TO_ZERO_TIME);
+	       CAN_1.ID_1_Motor_send.position=init_p_1*(to_zero_speed/TO_ZERO_TIME);
+	       CAN_2.ID_1_Motor_send.position=init_p_2*(to_zero_speed/TO_ZERO_TIME);
 		}
 		if(to_zero_speed<=0)
 		{
@@ -262,18 +274,19 @@ void Motor_Contron_Task_Task(void const * argument)
 	        run_count=0;
 		}
 	}
-	//
+	//正弦
 	else if(init_flag==1)
 	{
 		CAN_1.ID_1_Motor_send.position=position_wide*sin(2.0*3.1415926*(float)run_count/sin_time);
+		CAN_2.ID_1_Motor_send.position=position_wide*sin(2.0*3.1415926*(float)run_count/sin_time);
 	}
 
  
-	//RS04
+	//RS04 CAN1
 	CAN_Send_Control(&hcan1,&CAN_1.ID_1_Motor_send,CAN_TX_MAILBOX0);
 	osDelay(2);//200US
-	//RS04
-	CAN_Send_Control(&hcan2,&CAN_1.ID_1_Motor_send,CAN_TX_MAILBOX1);
+	//RS04 CAN2
+	CAN_Send_Control(&hcan2,&CAN_2.ID_1_Motor_send,CAN_TX_MAILBOX1);
 	osDelay(2);//200US
 	//RS02
 	CAN_Send_Control(&hcan1,&CAN_1.ID_4_Motor_send,CAN_TX_MAILBOX0);
