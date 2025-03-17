@@ -1,31 +1,16 @@
 
 
 # 简介
-   本程序使用C++在Linux环境编写、运行，通过两个USB2CAN模块使Linux系统电脑拓展4路CAN总线，每条总线挂载3个灵足RS04电机，程序可以以1000hz的频率控制共计12个灵足RS04电机，适用于一般四足机器人控制底层。
+   本程序为单片机控制灵足时代电机案例代码，使用C语言在STM32CubeIDE编写,在STM32F446运行，通过2路CAN总线，每条总线挂载3个灵足RS04电机和一个灵足RS02电机，程序可以以500hz的频率控制共计8个灵足RS04电机。
 
 
 # 前期准备
-本程序需要与肥猫机器人公司USB2CAN模块配合使用，请准备好模块与模块说明书、模块SDK，`并按照说明书使用install.sh文件安装USB2CAN规则文件，或手动安装规则文件，安装方法：`
-1. 进入项目目录下的can文件夹
-```bash
-cd USB2CAN-Demo-Lingzu/can
-```
-2. 复制规则文件usb_can.rules 到/etc/udev/rules.d/
-```bash
-sudo cp usb_can.rules /etc/udev/rules.d/
-```
-3. 运行下面的命令，使udev规则生效
-```bash
-sudo udevadm trigger
-```
+1. 本程序需要准备STM32F446单片机,其他单片机型号可在本程序基础上进行修改,本程序使用的是自己画的pcb，原理图位于:```PCB```文件夹，包含两路CAN接口
 
-```USB转2路CAN模块购买地址：```
-https://e.tb.cn/h.TBC18sl6EZKXUjL?tk=C5g5eLgyMf6HU071
+2. 本程序使用STM32CubeIDE开发，需要安装STM32CubeIDE，安装地址如下：
+https://www.st.com.cn/zh/development-tools/stm32cubeide.html
 
-```说明书以及SDK下载地址：```
-https://pan.baidu.com/s/1EwYDNQ0jMKyTSvJEEcj6aw?pwd=10ob
-
-```灵足时代电机购买地址：```
+3. ```灵足时代电机购买地址：```
 https://e.tb.cn/h.TAnAHUN38QORoTB?tk=zZ92eKjIaTxHU591
 
 
