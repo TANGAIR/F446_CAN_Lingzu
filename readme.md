@@ -53,10 +53,10 @@ cd F446_CAN_Lingzu
 Please cite the following if you use this code or parts of it:
 
 ```
-@software{tangair2025USB2CAN-Demo-Lingzu,
+@software{tangair2025F446_CAN_Lingzu,
   author = {tangair},
-  title = {{USB2CAN-Demo-Lingzu: An  project based on USB2CAN and Lingzu motor.}},
-  url = {https://github.com/SOULDE-Studio/USB2CAN-Demo-Lingzu.git},
+  title = {{F446_CAN_Lingzu: An  project based on USB2CAN and Lingzu motor.}},
+  url = {https://github.com/TANGAIR/F446_CAN_Lingzu.git},
   year = {2025}
 }
 ```
